@@ -55,8 +55,8 @@
             background: #e0e0e0;
         }
     </style>
-    <link rel="manifest" href="https://usejxo.github.io/manifest/manifest.json">
-    <script src="https://usejxo.github.io/manifest/sw.js"></script>
+    <link rel="manifest" href="manifest/manifest.json">
+    <script src="manifest/sw.js"></script>
 </head>
 <body>
     
@@ -84,7 +84,7 @@
                 appElement.innerHTML = `
                     <img src="${app.icon}" alt="${app.name}">
                     <h3>${app.name}</h3>
-                    <button class="open-btn" onclick="window.open('${app.url}', '_blank')">Open</button>
+                    <button class="open-btn" onclick="window.open('/Jlauncher?app=' + encodeURIComponent(app.url), '_blank', 'width=800,height=600')">Open</button>
                 `;
                 appList.appendChild(appElement);
             });
