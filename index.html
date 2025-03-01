@@ -2,9 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=https://jxo.netlify.app">
-    <title>Login & Signup</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #1e1e1e;
+            color: white;
+        }
+        .app-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .app {
+            background: #333;
+            padding: 10px;
+            border-radius: 10px;
+            width: 150px;
+            text-align: center;
+        }
+        .app img {
+            width: 100px;
+            height: 100px;
+            border-radius: 10px;
+        }
+        .open-btn {
+            margin-top: 10px;
+            padding: 5px 10px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .open-btn:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <h1>Jhub</h1>
+    <div class="app-container" id="app-list"></div>
+    <script>
+        fetch('https://usejxo.github.io/apps.json')
+            .then(response => response.json())
+            .then(data => {
+                const appList = document.getElementById('app-list');
+                data.forEach(app => {
+                    const appElement = document.createElement('div');
+                    appElement.classList.add('app');
+                    appElement.innerHTML = `
+                        <img src="${app.icon}" alt="${app.name}">
+                        <h3>${app.name}</h3>
+                        <button class="open-btn" onclick="window.open('${app.url}', '_blank')">Open</button>
+                    `;
+                    appList.appendChild(appElement);
+                });
+            })
+            .catch(error => console.error('Error loading apps:', error));
+    </script>
 </body>
 </html>
