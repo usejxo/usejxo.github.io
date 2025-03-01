@@ -8,8 +8,18 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #1e1e1e;
-            color: white;
+            background-color: white;
+            color: black;
+        }
+        .search-bar {
+            margin: 20px;
+        }
+        .search-input {
+            padding: 10px;
+            width: 300px;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            font-size: 16px;
         }
         .app-container {
             display: flex;
@@ -19,11 +29,12 @@
             padding: 20px;
         }
         .app {
-            background: #333;
+            background: #007bff;
             padding: 10px;
             border-radius: 10px;
             width: 150px;
             text-align: center;
+            color: white;
         }
         .app img {
             width: 100px;
@@ -34,36 +45,54 @@
             margin-top: 10px;
             padding: 5px 10px;
             border: none;
-            background: #007bff;
-            color: white;
+            background: white;
+            color: #007bff;
             border-radius: 5px;
             cursor: pointer;
+            font-weight: bold;
         }
         .open-btn:hover {
-            background: #0056b3;
+            background: #e0e0e0;
         }
     </style>
 </head>
 <body>
-    <h1>Jhub</h1>
+    
+    <div class="search-bar">
+        <input type="text" id="search" class="search-input" placeholder="Search apps..." onkeyup="filterApps()">
+    </div>
     <div class="app-container" id="app-list"></div>
     <script>
+        let appsData = [];
+        
         fetch('https://usejxo.github.io/apps.json')
             .then(response => response.json())
             .then(data => {
-                const appList = document.getElementById('app-list');
-                data.forEach(app => {
-                    const appElement = document.createElement('div');
-                    appElement.classList.add('app');
-                    appElement.innerHTML = `
-                        <img src="${app.icon}" alt="${app.name}">
-                        <h3>${app.name}</h3>
-                        <button class="open-btn" onclick="window.open('${app.url}', '_blank')">Open</button>
-                    `;
-                    appList.appendChild(appElement);
-                });
+                appsData = data;
+                displayApps(appsData);
             })
             .catch(error => console.error('Error loading apps:', error));
+        
+        function displayApps(apps) {
+            const appList = document.getElementById('app-list');
+            appList.innerHTML = '';
+            apps.forEach(app => {
+                const appElement = document.createElement('div');
+                appElement.classList.add('app');
+                appElement.innerHTML = `
+                    <img src="${app.icon}" alt="${app.name}">
+                    <h3>${app.name}</h3>
+                    <button class="open-btn" onclick="window.open('${app.url}', '_blank')">Open</button>
+                `;
+                appList.appendChild(appElement);
+            });
+        }
+        
+        function filterApps() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filteredApps = appsData.filter(app => app.name.toLowerCase().includes(query));
+            displayApps(filteredApps);
+        }
     </script>
 </body>
 </html>
