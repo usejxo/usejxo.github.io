@@ -3,5 +3,10 @@
         "name": "Jlauncher",
         "icon": "https://usejxo.github.io/Jlauncher/images/icon/icon.png",
         "url": "https://usejxo.github.io/Jlauncher/app.html"
+    },
+    {
+        "name": "Jxo OS",
+        "icon": "https://jxoj.github.io/images/icons/favicon.png",
+        "url": "https://jxoj.github.io/Jxo-OS"
     }
 ]
